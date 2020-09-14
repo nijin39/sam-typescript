@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Sample project to be committed to the CodeCommit repo created for the Quick Start",
   "stackname": "sample-project",
-  "samtemplate": "sample.yaml",
+  "samtemplate": "template.yaml",
   "cftemplate": "sample-transformed.yaml",
   "scripts": {
     "start": "node api/handler.js",
