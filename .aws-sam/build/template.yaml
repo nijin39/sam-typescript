@@ -1,8 +1,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: 'emart-account-app
+Description: 'f-app
 
-  Sample SAM Template for emart-account-app
+  Sample SAM Template for f-app
 
   '
 Parameters:
@@ -19,51 +19,18 @@ Globals:
   Function:
     Timeout: 3
 Resources:
-  AccountFunction:
+  HelloWorldFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: AccountFunction
+      CodeUri: HelloWorldFunction
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
       Events:
         HelloWorld:
           Type: Api
           Properties:
-            Path: /helloworld
+            Path: /hello
             Method: get
-      Role:
-        Fn::Sub: arn:aws:iam::${AWS::AccountId}:role/SampleLambdaRole-${AWS::Region}-${AWS::AccountId}-${Stage}
-  SampleApiFunctionPermission:
-    Type: AWS::IAM::Policy
-    Properties:
-      PolicyName:
-        Fn::Sub: SampleApiFunctionPermission-${AWS::Region}-${AWS::AccountId}-${SampleApiFunction}
-      Roles:
-      - Fn::Sub: SampleLambdaRole-${AWS::Region}-${AWS::AccountId}-${Stage}
-      PolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Effect: Allow
-          Action:
-          - logs:CreateLogGroup
-          Resource:
-            Fn::Sub: arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*
-        - Effect: Allow
-          Action:
-          - logs:CreateLogStream
-          - logs:PutLogEvents
-          Resource:
-            Fn::Sub: arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${SampleApiFunction}:*
-        - Effect: Allow
-          Action:
-          - secretsmanager:GetSecretValue
-          Resource:
-            Ref: MasterSecretArn
-        - Effect: Allow
-          Action:
-          - kms:Decrypt
-          Resource:
-            Ref: MasterSecretsManagerKey
 Outputs:
   HelloWorldApi:
     Description: API Gateway endpoint URL for Prod stage for Hello World function
