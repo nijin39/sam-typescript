@@ -5,6 +5,16 @@ Description: 'emart-account-app
   Sample SAM Template for emart-account-app
 
   '
+Parameters:
+  MasterSecretArn:
+    Description: Master Secret ARN
+    Type: String
+  MasterSecretsManagerKey:
+    Description: KMS Key for the use of secrets across accounts
+    Type: String
+  Stage:
+    Description: Environment
+    Type: String
 Globals:
   Function:
     Timeout: 3
@@ -21,6 +31,39 @@ Resources:
           Properties:
             Path: /helloworld
             Method: get
+      Role:
+        Fn::Sub: arn:aws:iam::${AWS::AccountId}:role/SampleLambdaRole-${AWS::Region}-${AWS::AccountId}-${Stage}
+  SampleApiFunctionPermission:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName:
+        Fn::Sub: SampleApiFunctionPermission-${AWS::Region}-${AWS::AccountId}-${SampleApiFunction}
+      Roles:
+      - Fn::Sub: SampleLambdaRole-${AWS::Region}-${AWS::AccountId}-${Stage}
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - logs:CreateLogGroup
+          Resource:
+            Fn::Sub: arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*
+        - Effect: Allow
+          Action:
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+          Resource:
+            Fn::Sub: arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${SampleApiFunction}:*
+        - Effect: Allow
+          Action:
+          - secretsmanager:GetSecretValue
+          Resource:
+            Ref: MasterSecretArn
+        - Effect: Allow
+          Action:
+          - kms:Decrypt
+          Resource:
+            Ref: MasterSecretsManagerKey
 Outputs:
   HelloWorldApi:
     Description: API Gateway endpoint URL for Prod stage for Hello World function
