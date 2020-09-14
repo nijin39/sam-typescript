@@ -19,10 +19,10 @@ phases:
       - echo "Learn more at https://docs.aws.amazon.com/lambda/latest/dg/serverless_app.html"
       - aws cloudformation package --template-file template.yaml --output-template-file packaged-template.yaml --s3-bucket $SAM_BUCKET
       - |-
-        echo "{ \"Parameters\" : { \"MasterSecretArn\" : \"$SECRET_ARN_DEV\", \"MasterSecretsManagerKey\" : \"$SECRET_MANAGER_KEY\", \"Stage\" : \"dev\" } }" > configuration-dev.json
-        echo "{ \"Parameters\" : { \"MasterSecretArn\" : \"$SECRET_ARN_PROD\", \"MasterSecretsManagerKey\" : \"$SECRET_MANAGER_KEY\", \"Stage\" : \"prod\" } }" > configuration-prod.json
+        echo "{ \"Parameters\" : { \"MasterSecretArn\" : \"$SECRET_ARN_DEV\", \"MasterSecretsManagerKey\" : \"$SECRET_MANAGER_KEY\", \"Stage\" : \"dev\" } }" > sample-configuration-dev.json
+        echo "{ \"Parameters\" : { \"MasterSecretArn\" : \"$SECRET_ARN_PROD\", \"MasterSecretsManagerKey\" : \"$SECRET_MANAGER_KEY\", \"Stage\" : \"prod\" } }" > sample-configuration-prod.json
 artifacts:
   files:
     - packaged-template.yaml
-    - configuration-dev.json
-    - configuration-prod.json
+    - sample-configuration-dev.json
+    - sample-configuration-prod.json
