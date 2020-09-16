@@ -1,7 +1,4 @@
-import './services/example.service';
-import axios from 'axios';
-import echoThisString, { consoleLogSomething } from './services/example.service';
-const url = 'http://checkip.amazonaws.com/';
+import AccountController from './controller/AccountController';
 let response;
 
 /**
@@ -39,26 +36,13 @@ let response;
  * 
  */
 export async function lambdaHandler(event, context) {
-    try {
-        const ret = await axios(url);
-        consoleLogSomething();
+    let accountController = new AccountController();
 
+    try {
         if (event.httpMethod === 'POST' && event.path === '/accounts') {
-            response = {
-                'statusCode': 200,
-                'body': JSON.stringify({
-                    message: echoThisString('Create Accounts'),
-                    location: ret.data.trim()
-                })
-            }
+            response = accountController.createAccount(event);
         } else if (event.httpMethod === 'GET' && event.path === '/accounts') {
-            response = {
-                'statusCode': 200,
-                'body': JSON.stringify({
-                    message: echoThisString('List Accounts'),
-                    location: ret.data.trim()
-                })
-            }
+            response = accountController.listAccount(event);
         }
     } catch (err) {
         console.log(err);
