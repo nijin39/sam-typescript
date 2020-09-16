@@ -1,5 +1,5 @@
-import Response from './interfaces/Response'
-import { AwsEvent } from '../interfaces/AwsEvent.interface';
+import Response from './interfaces/Response';
+import { AwsEvent } from './interfaces/AwsEvent.interface';
 import AccountService from '../application/AccountService';
 
 class AccountController {
