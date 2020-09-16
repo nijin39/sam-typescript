@@ -13,6 +13,7 @@ phases:
       - cd hello-world
       - npm install
       - npm run build
+      - cd ..
   build:
     commands:
       - echo "Doing a SAM translation on sample.yaml"
