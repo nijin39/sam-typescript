@@ -10,7 +10,9 @@ phases:
   pre_build:
     commands:
       - echo "Install dependencies"
+      - cd hello-world
       - npm install
+      - npm run build
   build:
     commands:
       - echo "Doing a SAM translation on sample.yaml"
