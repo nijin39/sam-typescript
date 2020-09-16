@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "emart-account-app:AccountFunction",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "template.yaml",
+                "logicalId": "AccountFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        }
+    ]
+}

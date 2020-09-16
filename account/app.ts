@@ -42,12 +42,23 @@ export async function lambdaHandler(event, context) {
     try {
         const ret = await axios(url);
         consoleLogSomething();
-        response = {
-            'statusCode': 200,
-            'body': JSON.stringify({
-                message: echoThisString('hello world'),
-                location: ret.data.trim()
-            })
+
+        if (event.httpMethod === 'POST' && event.path === '/accounts') {
+            response = {
+                'statusCode': 200,
+                'body': JSON.stringify({
+                    message: echoThisString('Create Accounts'),
+                    location: ret.data.trim()
+                })
+            }
+        } else if (event.httpMethod === 'GET' && event.path === '/accounts') {
+            response = {
+                'statusCode': 200,
+                'body': JSON.stringify({
+                    message: echoThisString('List Accounts'),
+                    location: ret.data.trim()
+                })
+            }
         }
     } catch (err) {
         console.log(err);
