@@ -4,7 +4,7 @@ import AccountRepository from "../domain/AccountRepository";
 class AccountMockRepository implements AccountRepository{
 
     findAll(): Array<Account> {
-        return [new Account("000","KANG SUNG IL"),new Account("001", "KIM JONG IL"), new Account("002", "LEE HEE JONG")]
+        return [new Account("000","KANG SUNG IL",100),new Account("001", "KIM JONG IL",200), new Account("002", "LEE HEE JONG", 300)]
     }
 
     save(account: Account): Account {

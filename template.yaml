@@ -40,6 +40,9 @@ Resources:
           Properties:
             Path: /accounts
             Method: post
+        RequestAuthN:
+            Path: /auth
+            Method: post
 
 
 Outputs:

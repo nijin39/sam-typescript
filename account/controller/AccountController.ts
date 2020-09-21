@@ -3,6 +3,7 @@ import { AwsEvent } from './interfaces/AwsEvent.interface';
 import AccountService from '../application/AccountService';
 
 class AccountController {
+    [x: string]: any;
     
     accountService: AccountService;
 
@@ -30,6 +31,18 @@ class AccountController {
                 message: result
             })
         }
+    }
+
+    public requestAuth(event:AwsEvent): Response {
+        let userId = event.body['userId'];
+        let password = event.body['password'];
+        let result:string = this.accountService.requestAuth(userId, password);
+        return {
+            'statusCode': 200,
+            'body': JSON.stringify({
+                message: result
+            })
+        } 
     }
 }
 
