@@ -1,9 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  f-app
-
-  Sample SAM Template for f-app
+  Emart Member App
 
 Parameters:
   MasterSecretArn:
@@ -40,8 +38,10 @@ Resources:
           Properties:
             Path: /accounts
             Method: post
-        RequestAuthN:
-            Path: /auth
+        Login:
+          Type: Api
+          Properties:
+            Path: /login
             Method: post
 
 

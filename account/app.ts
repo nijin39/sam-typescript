@@ -36,6 +36,9 @@ let response;
  * 
  */
 export async function lambdaHandler(event, context) {
+
+    console.log("EVEVER :",event);
+
     let accountController = new AccountController();
 
     try {
@@ -43,6 +46,8 @@ export async function lambdaHandler(event, context) {
             response = accountController.createAccount(event);
         } else if (event.httpMethod === 'GET' && event.path === '/accounts') {
             response = accountController.listAccount(event);
+        } else if (event.httpMethod === 'POST' && event.path === '/login') {
+            response = await accountController.login(event);
         }
     } catch (err) {
         console.log(err);

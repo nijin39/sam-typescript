@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'Emart Member App
+
+  '
+Parameters:
+  MasterSecretArn:
+    Description: Master Secret ARN
+    Type: String
+  MasterSecretsManagerKey:
+    Description: KMS Key for the use of secrets across accounts
+    Type: String
+  Stage:
+    Description: Environment
+    Type: String
+Globals:
+  Function:
+    Timeout: 3
+Resources:
+  AccountFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: AccountFunction
+      Handler: app.lambdaHandler
+      Runtime: nodejs12.x
+      Events:
+        ListAccounts:
+          Type: Api
+          Properties:
+            Path: /accounts
+            Method: get
+        CreateAccounts:
+          Type: Api
+          Properties:
+            Path: /accounts
+            Method: post
+        Login:
+          Type: Api
+          Properties:
+            Path: /login
+            Method: post
+Outputs:
+  HelloWorldApi:
+    Description: API Gateway endpoint URL for Prod stage for Account function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/account/
+  AccountFunction:
+    Description: Account Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - AccountFunction
+      - Arn
+  AccountFunctionIamRole:
+    Description: Implicit IAM Role created for Account function
+    Value:
+      Fn::GetAtt:
+      - AccountFunctionRole
+      - Arn
